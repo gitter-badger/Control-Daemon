@@ -22,6 +22,8 @@ class RealDevice(models.Model):
     host = models.ForeignKey(Host, verbose_name=u"host", related_name="devices")
     metric = models.CharField(u"metric", max_length=255, choices=METRIC_TYPE_CHOICES, default="dummy")
 
+    def __unicode__(self):
+        return self.name or ("Real device - %s" % self.pk)
 
     class Meta:
         verbose_name = u"real device"

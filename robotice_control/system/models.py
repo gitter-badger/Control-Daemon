@@ -25,6 +25,9 @@ class SystemDevice(models.Model):
     real_device = models.ForeignKey(RealDevice, verbose_name=u"real_device", related_name="system_devices")
     system = models.ForeignKey(System, verbose_name=u"system", related_name="devices")
 
+    def __unicode__(self):
+        return self.name or ("System device - %s" % self.pk)
+
     class Meta:
         verbose_name = u"system device"
         verbose_name_plural = u"system devices"

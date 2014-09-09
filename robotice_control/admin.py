@@ -32,7 +32,7 @@ admin.site.register(System, SystemAdmin)
 
 class HostAdmin(admin.ModelAdmin):
 
-    list_display = ('name', )
+    list_display = ('hostname', )
     inlines = [RealDeviceInline]
 
 admin.site.register(Host, HostAdmin)

@@ -17,6 +17,9 @@ class ModelDevice(models.Model):
     type = models.CharField(u"type", max_length=255, choices=DEVICE_TYPE_CHOICES, default="sensor")
     plan = models.ForeignKey(Plan, verbose_name=u"plan", related_name="devices")
 
+    def __unicode__(self):
+        return self.name or ("Model device - %s" % self.pk)
+
     class Meta:
         verbose_name = u"model device"
         verbose_name_plural = u"model devices"
