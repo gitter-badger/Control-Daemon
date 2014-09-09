@@ -3,7 +3,7 @@
 
 from os.path import join, dirname, abspath, normpath
 
-from config import DEFAULT_DATABASE, DEFAULT_CACHE, DEFAULT_EMAIL, \
+from config import DEFAULT_DATABASE, DEFAULT_CACHE, DEFAULT_EMAIL, SECRET_KEY\
                    RAVEN_CONFIG, DEFAULT_BROKER as BROKER_URL
 
 ALLOWED_HOSTS = ['*']
@@ -39,9 +39,6 @@ SITE_ID = 1
 SITE_NAME = 'robotice_control'
 
 TIME_ZONE = 'Europe/Prague'
-{#
-TIME_ZONE = '{{ pillar.system.timezone }}'
-#}
 
 LANGUAGE_CODE = 'en'
 
@@ -57,7 +54,6 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = '/srv/robotice_control/static/'
 STATIC_URL = '/static/'
 
-SECRET_KEY = '{{ server.secret_key }}'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -99,9 +95,7 @@ INSTALLED_APPS = (
     'south',
     'rest_framework',
     'robotice_control',
-    {% if server.logging is defined %}
     'raven.contrib.django.raven_compat',
-    {% endif %}
 )
 
 STATICFILES_FINDERS =(
@@ -125,33 +119,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-{%- if server.metric is defined %}
-
-{%- if server.metric.get("in", {"engine": ""}).engine == 'graphite' %}
-GRAPHITE_HOST = "{{ server.metric.in.host }}"
-GRAPHITE_PORT = "{{ server.metric.in.port }}"
-GRAPHITE_ENDPOINT = 'http://%s:%s' % (GRAPHITE_HOST, GRAPHITE_PORT)
-{%- endif %}
-
-{%- if server.metric.get("out", {"engine": ""}).engine == 'statsd' %}
-STATSD_HOST = "{{ server.metric.out.host }}"
-STATSD_PORT = "{{ server.metric.out.get('port', 8125) }}"
-STATSD_PREFIX = "{{ server.metric.out.get('prefix', '') }}"
-{%- endif %}
-
-{%- if server.metric.get("out", {"engine": ""}).engine == 'carbon' %}
-CARBON_HOST = "{{ server.metric.out.host }}"
-CARBON_PORT = "{{ server.metric.out.get('port', 2003) }}"
-{%- endif %}
-
-{%- endif %}
-
-RAVEN_CONFIG = {
-{% if server.logging is defined %}
-    'dsn': '{{ server.logging.dsn }}',
-{% endif %}
-}
-{% if server.logging is defined %}
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -186,7 +153,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/srv/robotice_control/logs/robotice_control.log',
+            'filename': '/srv/robotice_control/logs/robotice_server.log',
             'formatter': 'verbose'
         },
         'mail_admins': {
@@ -214,4 +181,3 @@ LOGGING = {
         },
     }
 }
-{% endif %}
