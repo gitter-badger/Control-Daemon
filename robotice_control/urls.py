@@ -1,6 +1,6 @@
 import os
 
-from django.conf.urls.defaults import url, patterns, include
+from django.conf.urls import patterns, url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.models import User, Group
