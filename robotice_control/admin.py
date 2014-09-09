@@ -1,16 +1,45 @@
-import os
-import re
-from datetime import datetime, date, timedelta
-import calendar
-from logging import getLogger
-import decimal
-from django.db import models
-from django.core import urlresolvers
-from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
-from django.utils.translation import ugettext_lazy as _
+# -*- coding: UTF-8 -*-
 
-from django_extensions.db.fields.json import JSONField
+from django.contrib import admin, messages
+from django.http import HttpResponseRedirect
+from django.utils.html import mark_safe
 
-from celery.execute import send_task
+from robotice_control.host.models import Host, RealDevice
+from robotice_control.plan.models import Plan, ModelDevice
+from robotice_control.system.models import System, SystemDevice
+
+class RealDeviceInline(admin.TabularInline):
+    model = RealDevice
+    extra = 1
+    suit_classes = 'suit-tab suit-tab-real-device'
+
+class ModelDeviceInline(admin.TabularInline):
+    model = ModelDevice
+    extra = 1
+    suit_classes = 'suit-tab suit-tab-model-device'
+
+class SystemDeviceInline(admin.TabularInline):
+    model = SystemDevice
+    extra = 1
+    suit_classes = 'suit-tab suit-tab-system-device'
+
+class SystemAdmin(admin.ModelAdmin):
+
+    list_display = ('name', )
+    inlines = [SystemDeviceInline]
+
+admin.site.register(System, SystemAdmin)
+
+class HostAdmin(admin.ModelAdmin):
+
+    list_display = ('name', )
+    inlines = [RealDeviceInline]
+
+admin.site.register(Host, HostAdmin)
+
+class PlanAdmin(admin.ModelAdmin):
+
+    list_display = ('name', )
+    inlines = [ModelDeviceInline]
+
+admin.site.register(Plan, PlanAdmin)

@@ -8,8 +8,8 @@ from rest_framework import viewsets, routers
 
 admin.autodiscover()
 
-urlpatterns = patterns('meshlib.views',
+urlpatterns = patterns('robotice_control',
     url(r'^doc/', include('django.contrib.admindocs.urls')),
-     url(r'^', include(admin.site.urls)),
+    url(r'^', include(admin.site.urls)),
 
 ) + staticfiles_urlpatterns()
