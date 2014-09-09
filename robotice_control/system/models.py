@@ -14,6 +14,9 @@ class System(models.Model):
     name = models.CharField(u"name", max_length=255)
     plan = models.ForeignKey(Plan, verbose_name=u"plan", related_name="plans")
 
+    def __unicode__(self):
+        return self.name or ("System - %s" % self.pk)
+
     class Meta:
         verbose_name = u"system"
         verbose_name_plural = u"systems"

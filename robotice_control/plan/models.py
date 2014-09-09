@@ -7,6 +7,9 @@ class Plan(models.Model):
     name = models.CharField(u"name", max_length=255)
     description = models.TextField(u"description", max_length=255, blank=True)
 
+    def __unicode__(self):
+        return self.name or ("Plan - %s" % self.pk)
+
     class Meta:
         verbose_name = u"plan"
         verbose_name_plural = u"plans"
@@ -33,6 +36,9 @@ class Cycle(models.Model):
     end = models.DateField(u"end", null=True, blank=True)
 
     device = models.ForeignKey(ModelDevice, verbose_name=u"model_device", related_name="model_devices")
+
+    def __unicode__(self):
+        return self.name or ("Cycle - %s" % self.pk)
 
     class Meta:
         verbose_name = u"cycle"
