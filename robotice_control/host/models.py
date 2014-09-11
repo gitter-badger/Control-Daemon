@@ -3,6 +3,7 @@ from django.db import models
 from django_extensions.db.fields.json import JSONField
 
 from robotice_control.const import DEVICE_TYPE_CHOICES, CPU_ARCH_CHOICES, METRIC_TYPE_CHOICES
+from robotice_control.utils.models import RoboticeModelMixin
 
 
 class Host(models.Model):
@@ -14,7 +15,7 @@ class Host(models.Model):
         verbose_name = u"host"
         verbose_name_plural = u"hosts"
 
-class RealDevice(models.Model):
+class RealDevice(models.Model, RoboticeModelMixin):
 
     name = models.CharField(u"name", max_length=255)
     type = models.CharField(u"type", max_length=255, choices=DEVICE_TYPE_CHOICES, default="sensor")

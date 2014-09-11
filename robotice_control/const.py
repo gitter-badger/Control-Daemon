@@ -11,7 +11,8 @@ CPU_ARCH_CHOICES = (
 
 METRIC_TYPE_CHOICES = (
     ("dummy", "Dummy"),
-    ("temp", "Temp"),
-    ("humidity", "Humidity"),
+    ("socket", "Socket"),
+    ("temp", "Temperature"),
+    ("air_humidity", "Humidity"),
     ("soil_humidity", "Soil Humidity"),
 )
